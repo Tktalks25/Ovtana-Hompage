@@ -219,16 +219,31 @@ nav{position:sticky;top:0;z-index:50;background:rgba(251,250,254,.9);backdrop-fi
 /* ---------- waitlist ---------- */
 .store-note{font-size:13px;color:var(--muted);margin-top:14px}
 .wl{max-width:440px;margin:26px auto 0}
-.wl-form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.wl-form input{flex:1;min-width:230px;padding:14px 18px;font:inherit;font-size:16px;border:1.5px solid transparent;border-radius:999px;background:rgba(255,255,255,.12);color:#fff}
-.wl-form input::placeholder{color:var(--tint2)}
-.wl-form input:focus{outline:3px solid var(--lav);background:rgba(255,255,255,.18)}
-.wl-form button{padding:14px 26px;font:inherit;font-weight:600;font-size:16px;color:var(--deep);background:#fff;border:0;border-radius:999px;cursor:pointer;transition:transform .15s,opacity .15s}
-.wl-form button:hover{transform:translateY(-1px)}
-.wl-form button:disabled{opacity:.7;cursor:default;transform:none}
-.wl-ok{display:none;font-size:16px;color:#fff;font-weight:600;margin-top:12px}
-.wl-ok b{color:var(--lav)}
-.wl-err{display:none;font-size:14px;color:#FBCFE8;margin-top:12px}
+
+/* ---------- waitlist modal ---------- */
+.wl-modal-overlay{position:fixed;inset:0;z-index:100;background:rgba(46,16,101,.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;transition:opacity .22s ease}
+.wl-modal-overlay[hidden]{display:none}
+.wl-modal-overlay.show{opacity:1}
+.wl-modal{background:#fff;border-radius:22px;padding:36px;max-width:440px;width:100%;box-shadow:0 24px 60px -20px rgba(59,7,100,.45);position:relative;transform:translateY(14px) scale(.98);opacity:0;transition:transform .28s cubic-bezier(.22,.61,.36,1),opacity .28s ease}
+.wl-modal-overlay.show .wl-modal{transform:none;opacity:1}
+.wl-modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;border:0;background:var(--tint);color:var(--violet);font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.wl-modal-close:hover{background:var(--tint2)}
+.wl-modal h3{font-size:24px;margin:0 0 8px}
+.wl-modal-sub{font-size:14.5px;color:var(--muted);margin-bottom:22px}
+.wl-modal-form{display:flex;flex-direction:column;gap:14px}
+.wl-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:420px){.wl-row{grid-template-columns:1fr}}
+.wl-field{display:flex;flex-direction:column;gap:6px;text-align:left}
+.wl-field label{font-size:12.5px;font-weight:600;color:var(--muted)}
+.wl-field input{font:inherit;font-size:15px;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:var(--mist);color:var(--ink)}
+.wl-field input:focus{outline:3px solid var(--lav);outline-offset:1px;border-color:var(--violet)}
+.wl-modal-form .btn{width:100%;text-align:center;margin-top:4px;border:2px solid var(--violet)}
+.wl-modal-form .btn:disabled{opacity:.65;cursor:default;transform:none}
+.wl-privacy{font-size:12px;color:var(--muted);line-height:1.6;margin-top:2px}
+.wl-err{display:none;font-size:13.5px;color:#DC2626;margin:0}
+.wl-success{font-size:16px;color:var(--ink);line-height:1.6;text-align:left}
+.wl-success b{color:var(--violet)}
+body.wl-lock{overflow:hidden}
 
 /* download band */
 .download{background:var(--deep);color:var(--tint);text-align:center}
@@ -302,7 +317,7 @@ footer .disclaimer{max-width:60em;line-height:1.7}
       <li><a href="#how">How it works</a></li>
       <li><a href="#math">The math</a></li>
       <li><a href="#stages">Every stage</a></li>
-      <li><a class="btn" href="#waitlist">Join the waitlist</a></li>
+      <li><a class="btn js-waitlist" href="#waitlist">Join the waitlist</a></li>
     </ul>
   </div>
 </nav>
@@ -319,7 +334,7 @@ footer .disclaimer{max-width:60em;line-height:1.7}
       <h1>Your hormones are always speaking. <em>Stop guessing</em> what they're saying.</h1>
       <p class="lede">Whether you cycle, have an IUD, live with PCOS, or are moving through menopause — Ovtana turns your body's signals into daily decisions: what to eat, how to train, when to rest. Calories logged from a photo. A companion to talk it through.</p>
       <div class="hero-ctas">
-        <a class="btn" href="#waitlist">Join the waitlist</a>
+        <a class="btn js-waitlist" href="#waitlist">Join the waitlist</a>
         <a class="btn ghost" href="#how">See how it works</a>
       </div>
       <p class="hero-note">Launching soon on iOS &amp; Android. Join the waitlist for first access and a founding-member price. For women 18+.</p>
@@ -438,7 +453,7 @@ footer .disclaimer{max-width:60em;line-height:1.7}
       </div>
       <p class="moat">Same goal. Different week. <b>Different math.</b></p>
       <p class="math-note">One woman, a 2,000-calorie maintenance with a mild fat-loss goal: her target holds at 1,700 for most of the month, then rises to 2,000 in her luteal phase — because her body's burn does. Ovtana runs this math for you, every day, and re-checks it against your own logs and weight trend. <span class="math-fine">Estimates use the Mifflin-St Jeor equation for women; your TDEE is a starting point, not gospel. Sustainable fat loss is a 250–500 calorie deficit; lean muscle gain a 200–350 surplus. Illustrative only — not medical advice.</span></p>
-      <a class="btn" href="#waitlist">Get your daily targets — join the waitlist</a>
+      <a class="btn js-waitlist" href="#waitlist">Get your daily targets — join the waitlist</a>
     </div>
 
     <div class="frag" id="frag">
@@ -538,13 +553,7 @@ footer .disclaimer{max-width:60em;line-height:1.7}
     <h2>Stop guessing. Start deciding.</h2>
     <p class="lede">Ovtana launches soon on iOS and Android. Join the waitlist to be first through the door — with a founding-member price when we open.</p>
     <div class="wl">
-      <form class="wl-form" id="wlForm" novalidate>
-        <label for="wlEmail" style="position:absolute;left:-9999px">Email address</label>
-        <input type="email" id="wlEmail" name="email" placeholder="you@example.com" autocomplete="email" required>
-        <button type="submit" id="wlBtn">Join the waitlist</button>
-      </form>
-      <p class="wl-ok" id="wlOk"><b>You're on the list.</b> We'll email you the moment Ovtana opens.</p>
-      <p class="wl-err" id="wlErr">Something went wrong — please try again, or email hello@ovtana.com.</p>
+      <a class="btn js-waitlist" href="#waitlist">Join the waitlist</a>
     </div>
     <p class="store-note">For women 18+ · We'll only email you about Ovtana. No spam, ever.</p>
   </div>
@@ -559,6 +568,37 @@ footer .disclaimer{max-width:60em;line-height:1.7}
     <p class="disclaimer">Ovtana provides general lifestyle guidance and is not a medical device. It does not diagnose, treat, cure, or prevent any disease or medical condition, and it is not a substitute for professional medical advice, diagnosis, or treatment. Calorie estimates are illustrative and individual needs vary. Always consult a qualified healthcare provider about your health, symptoms, medications, and before making changes to your diet or exercise routine.</p>
   </div>
 </footer>
+
+<!-- ================= WAITLIST MODAL ================= -->
+<div class="wl-modal-overlay" id="wlOverlay" hidden>
+  <div class="wl-modal" role="dialog" aria-modal="true" aria-labelledby="wlModalTitle">
+    <button type="button" class="wl-modal-close" id="wlModalClose" aria-label="Close">&times;</button>
+    <div id="wlModalBody">
+      <p class="eyebrow">Early access</p>
+      <h3 id="wlModalTitle">Join the waitlist</h3>
+      <p class="wl-modal-sub">Be first through the door — with a founding-member price when we open.</p>
+      <form class="wl-modal-form" id="wlForm" novalidate>
+        <div class="wl-row">
+          <div class="wl-field">
+            <label for="wlFirst">First name</label>
+            <input type="text" id="wlFirst" name="firstName" autocomplete="given-name" required>
+          </div>
+          <div class="wl-field">
+            <label for="wlLast">Last name</label>
+            <input type="text" id="wlLast" name="lastName" autocomplete="family-name" required>
+          </div>
+        </div>
+        <div class="wl-field">
+          <label for="wlEmail">Email address</label>
+          <input type="email" id="wlEmail" name="email" autocomplete="email" required>
+        </div>
+        <p class="wl-err" id="wlErr" role="alert">Something went wrong. Please try again.</p>
+        <button type="submit" class="btn" id="wlBtn">Join Waitlist</button>
+        <p class="wl-privacy">By joining the waitlist, you agree to receive occasional product updates from Ovtana. You can unsubscribe at any time.</p>
+      </form>
+    </div>
+  </div>
+</div>
 
 <script>
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -673,36 +713,81 @@ document.querySelectorAll('.mode-btn').forEach(b => b.addEventListener('click', 
 }));
 renderButtons();
 
-// ---------- waitlist ----------
-// ---------- waitlist ----------
-// SETUP: create a free form at https://formspree.io, then paste your form ID below.
-// It looks like "xzzabcde" — replace FORMSPREE_ID. Until then, submissions are stored
-// locally as a fallback so nothing is lost during a demo.
-const FORMSPREE_ID = "FORMSPREE_ID";
+// ---------- waitlist modal ----------
+const WAITLIST_ENDPOINT = "https://formspree.io/f/xlgyqkvq";
+const wlOverlay = document.getElementById('wlOverlay');
+const wlModalBody = document.getElementById('wlModalBody');
+let wlSubmitting = false;
+let wlLastFocused = null;
+
+function openWaitlistModal(e){
+  if(e) e.preventDefault();
+  if(!wlOverlay) return;
+  wlLastFocused = document.activeElement;
+  wlOverlay.hidden = false;
+  requestAnimationFrame(() => wlOverlay.classList.add('show'));
+  document.body.classList.add('wl-lock');
+  const first = document.getElementById('wlFirst');
+  if(first) first.focus();
+}
+function closeWaitlistModal(){
+  if(!wlOverlay) return;
+  wlOverlay.classList.remove('show');
+  document.body.classList.remove('wl-lock');
+  setTimeout(() => { wlOverlay.hidden = true; }, 220);
+  if(wlLastFocused && wlLastFocused.focus) wlLastFocused.focus();
+}
+document.querySelectorAll('.js-waitlist').forEach(el => el.addEventListener('click', openWaitlistModal));
+const wlModalClose = document.getElementById('wlModalClose');
+if(wlModalClose) wlModalClose.addEventListener('click', closeWaitlistModal);
+if(wlOverlay){
+  wlOverlay.addEventListener('click', e => { if(e.target === wlOverlay) closeWaitlistModal(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape' && !wlOverlay.hidden) closeWaitlistModal(); });
+}
+
 const wlForm = document.getElementById('wlForm');
 if(wlForm){
-  const okMsg = document.getElementById('wlOk');
   const errMsg = document.getElementById('wlErr');
   const btn = document.getElementById('wlBtn');
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   wlForm.addEventListener('submit', async e => {
     e.preventDefault();
-    const email = document.getElementById('wlEmail');
+    if(wlSubmitting) return;
     if(errMsg) errMsg.style.display = 'none';
-    if(!email.value || !email.checkValidity()){ email.focus(); return; }
-    btn.disabled = true; btn.textContent = 'Joining…';
-    const done = () => { wlForm.style.display = 'none'; if(okMsg) okMsg.style.display = 'block'; };
-    const fail = () => { btn.disabled = false; btn.textContent = 'Join the waitlist'; if(errMsg) errMsg.style.display = 'block'; };
-    if(FORMSPREE_ID === "FORMSPREE_ID"){
-      // Fallback: no endpoint configured yet — keep the email so a live demo still "works".
-      try{ const list = JSON.parse(localStorage.getItem('ovtana_waitlist')||'[]'); list.push({email:email.value, at:Date.now()}); localStorage.setItem('ovtana_waitlist', JSON.stringify(list)); }catch(_){}
-      done(); return;
-    }
+
+    const firstName = document.getElementById('wlFirst');
+    const lastName = document.getElementById('wlLast');
+    const email = document.getElementById('wlEmail');
+
+    if(!firstName.value.trim()){ firstName.focus(); return; }
+    if(!lastName.value.trim()){ lastName.focus(); return; }
+    if(!email.value || !EMAIL_RE.test(email.value.trim()) || !email.checkValidity()){ email.focus(); return; }
+
+    wlSubmitting = true;
+    btn.disabled = true;
+    btn.textContent = 'Joining...';
+
     try{
-      const res = await fetch('https://formspree.io/f/'+FORMSPREE_ID, {
-        method:'POST', headers:{'Accept':'application/json'}, body:new FormData(wlForm)
+      const res = await fetch(WAITLIST_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(wlForm)
       });
-      if(res.ok) done(); else fail();
-    }catch(_){ fail(); }
+      if(res.ok){
+        wlModalBody.innerHTML = '<p class="wl-success"><b>Welcome to the waitlist!</b> You’ll be among the first to hear when our beta app launches.</p>';
+      } else {
+        wlSubmitting = false;
+        btn.disabled = false;
+        btn.textContent = 'Join Waitlist';
+        if(errMsg) errMsg.style.display = 'block';
+      }
+    }catch(_){
+      wlSubmitting = false;
+      btn.disabled = false;
+      btn.textContent = 'Join Waitlist';
+      if(errMsg) errMsg.style.display = 'block';
+    }
   });
 }
 
